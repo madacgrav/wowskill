@@ -24,13 +24,14 @@ license: MIT
 | Adding or reading persisted settings | `references/saved-variables.md` | SVs are nil until `ADDON_LOADED`, plus the defaults-merge and migration patterns. |
 | Registering events or placing init code | `references/events.md` | Lifecycle order and what each event is for. The full list is in the index. |
 | Writing or running tests, or a stub is missing | `references/testing.md` | The wowmock harness API, how to add stubs, and what it can't catch. |
+| Choosing a scaffold, or adding options, profiles or modules | `references/ace3-vs-vanilla.md` | The vanilla vs `--ace3` decision rule, the Ace3 lifecycle, and soft-embedding libraries. |
 
 ## Workflows
 
 ### New addon (simple)
 1. **Clarify** in at most 3 questions: what it shows or does, what triggers it, and whether it has UI.
 2. **Gap analysis**: check whether an existing addon already covers it (see the gap-analysis workflow) and recommend use / fork / build.
-3. **Scaffold**: run `<skill>/scripts/scaffold.sh <Name> --dest <dir> [--pattern event|timer|ui|ldb|tooltip]...`, choosing only the patterns the addon needs.
+3. **Scaffold**: choose vanilla or `--ace3` per `references/ace3-vs-vanilla.md`, then run `<skill>/scripts/scaffold.sh <Name> --dest <dir> [--ace3] [--pattern event|timer|ui|ldb|tooltip]...`. Patterns apply to vanilla only; select just the ones the addon needs.
 4. **Implement** the feature in `Core.lua`, verifying every API name against the index.
 5. **Lint** with `<skill>/scripts/lint.sh <dir>/<Name>` until it's clean.
 6. **Test**: add a spec for the feature in `tests/`, then run `<skill>/scripts/test.sh <dir>/<Name>` until it's green.
@@ -45,6 +46,7 @@ Scripts live in this skill's folder; references write that folder as `<skill>`. 
 | `<skill>/scripts/lint.sh <addon-dir or file.lua>` | Run luacheck with the generated Forever std, plus never-emit and unthrottled-`OnUpdate` checks. Non-zero exit means fix before handing over. |
 | `<skill>/scripts/gen-api.sh [--src DIR]` | Regenerate `forever-api-index.md` and the lint std from Gethe/wow-ui-source `forever`. Run after launch and after each patch. |
 | `<skill>/scripts/scaffold.sh <Name> [--pattern p]... [--dest DIR] [--license MIT\|none] [--author A] [--notes TXT]` | Render a vanilla addon (TOC, `Core.lua`, `.luacheckrc`, README, CHANGELOG, LICENSE, `tests/` with the vendored mock) with only the selected patterns. |
+| `<skill>/scripts/scaffold.sh <Name> --ace3 [--dest DIR] ...` | Render an Ace3 addon (TOC, `embeds.xml`, `Core.lua`, `Options.lua` with a profiles panel, tests, `.gitignore` for `Libs/`). |
 | `<skill>/scripts/test.sh <addon-dir>` | Run `tests/*_spec.lua` offline under LuaJIT with wowmock. Non-zero exit means a failing test. |
 
 ## In-game checklist

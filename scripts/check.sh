@@ -37,6 +37,11 @@ for pats in "" "event" "timer" "ui" "ldb" "tooltip" "event timer ui ldb tooltip"
   "$SK/scripts/test.sh" "$TMP/$n/Demo" >/dev/null || { echo "tests failed: [$pats]"; fail=1; }
 done
 "$TMP/$n/Demo/tests/run.sh" >/dev/null || { echo "vendored tests/run.sh failed"; fail=1; }
+"$SK/scripts/scaffold.sh" AceDemo --ace3 --dest "$TMP/ace" >/dev/null || { echo "ace3 scaffold failed"; fail=1; }
+"$SK/scripts/lint.sh" "$TMP/ace/AceDemo" >/dev/null || { echo "lint failed: ace3"; fail=1; }
+"$SK/scripts/test.sh" "$TMP/ace/AceDemo" >/dev/null || { echo "tests failed: ace3"; fail=1; }
+diff -rq "$SK/scripts/wowmock" "$ROOT/examples/TooltipItemLevel/tests/wowmock" >/dev/null \
+  || { echo "examples/TooltipItemLevel/tests/wowmock is stale: re-copy from $SK/scripts/wowmock"; fail=1; }
 [ $fail -eq 0 ] && echo "scaffold smoke OK ($n variants, lint + tests)"
 
 step "examples"

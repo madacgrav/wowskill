@@ -84,6 +84,8 @@ if opt.license ~= "none" then common["LICENSE.MIT"] = "LICENSE" end
 for src, dst in pairs(common) do
   write(root .. "/" .. dst, render(read(SK .. "/templates/common/" .. src)))
 end
+-- Ace3 libs are soft-embedded via .pkgmeta externals; never commit them
+if opt.ace3 then write(root .. "/.gitignore", "Libs/\n.release/\n") end
 
 -- vendor the mock harness (copied verbatim) and a self-contained test runner script
 for _, rel in ipairs(files(SK .. "/scripts/wowmock")) do

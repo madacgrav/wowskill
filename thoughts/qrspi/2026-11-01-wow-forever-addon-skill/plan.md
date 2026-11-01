@@ -871,9 +871,9 @@ Scaffold smoke adds `scaffold.sh AceDemo --ace3`, then lint, then test.
 
 ### Verification
 #### Automated
-- [ ] `scaffold.sh AceDemo --ace3 --dest $d && lint.sh $d/AceDemo && test.sh $d/AceDemo` exits 0
-- [ ] Vanilla scaffold tests still pass (the ace.lua LibStub changes must not break them)
-- [ ] `scripts/check.sh` exits 0
+- [x] `scaffold.sh AceDemo --ace3 --dest $d && lint.sh $d/AceDemo && test.sh $d/AceDemo` exits 0 (4 passed)
+- [x] Vanilla scaffold tests still pass (the ace.lua LibStub changes must not break them)
+- [x] `scripts/check.sh` exits 0 (also now fails if the example's vendored mock drifts from the skill's)
 
 #### Manual (post-launch)
 - [ ] AceDemo with libs (from the P7 packager dry run, or checked out by hand) `/reload`s with no errors. `/acedemo` opens the options panel. The profile switch works.
