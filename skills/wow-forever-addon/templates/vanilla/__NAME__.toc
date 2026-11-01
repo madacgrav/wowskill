@@ -1,0 +1,11 @@
+## Interface: __INTERFACE__
+## Title: __NAME__
+## Notes: __NOTES__
+## Author: __AUTHOR__
+## Version: @project-version@
+## SavedVariables: __NAME__DB
+## SavedVariablesPerCharacter: __NAME__CharDB
+# ## X-Curse-Project-ID: <id>   (uncomment after creating the project; see release-pipeline.md)
+# ## X-Wago-ID: <id>
+
+Core.lua
