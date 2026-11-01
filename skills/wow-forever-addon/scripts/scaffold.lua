@@ -84,4 +84,17 @@ if opt.license ~= "none" then common["LICENSE.MIT"] = "LICENSE" end
 for src, dst in pairs(common) do
   write(root .. "/" .. dst, render(read(SK .. "/templates/common/" .. src)))
 end
+
+-- vendor the mock harness (copied verbatim) and a self-contained test runner script
+for _, rel in ipairs(files(SK .. "/scripts/wowmock")) do
+  write(root .. "/tests/wowmock/" .. rel, read(SK .. "/scripts/wowmock/" .. rel))
+end
+write(root .. "/tests/run.sh", [[#!/usr/bin/env bash
+# Run this addon's offline tests (LuaJIT + bundled wowmock).
+set -u
+D="$(cd "$(dirname "$0")/.." && pwd)"
+set -- "$D"/tests/*_spec.lua
+LUA_PATH="$D/tests/?.lua;$D/tests/?/init.lua;;" exec luajit "$D/tests/wowmock/runner.lua" "$D" "$@"
+]])
+os.execute('chmod +x "' .. root .. '/tests/run.sh"')
 print("created " .. root)

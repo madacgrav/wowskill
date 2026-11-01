@@ -34,10 +34,21 @@ for pats in "" "event" "timer" "ui" "ldb" "tooltip" "event timer ui ldb tooltip"
   "$SK/scripts/scaffold.sh" Demo --dest "$TMP/$n" $args >/dev/null || { echo "scaffold failed: [$pats]"; fail=1; continue; }
   if grep -rqE '__[A-Z]+__|@pattern:|@end-pattern@' "$TMP/$n/Demo"; then echo "leftover tokens: [$pats]"; fail=1; fi
   "$SK/scripts/lint.sh" "$TMP/$n/Demo" >/dev/null || { echo "lint failed: [$pats]"; fail=1; }
+  "$SK/scripts/test.sh" "$TMP/$n/Demo" >/dev/null || { echo "tests failed: [$pats]"; fail=1; }
 done
-[ $fail -eq 0 ] && echo "scaffold smoke OK ($n variants)"
+"$TMP/$n/Demo/tests/run.sh" >/dev/null || { echo "vendored tests/run.sh failed"; fail=1; }
+[ $fail -eq 0 ] && echo "scaffold smoke OK ($n variants, lint + tests)"
 
-# (P3+) tests, (P5+) qrspi name isolation, (P6+) buggy fixture
+step "examples"
+for d in "$ROOT"/examples/*/; do
+  [ -d "$d" ] || continue
+  name="$(basename "$d")"
+  "$SK/scripts/lint.sh" "$d" >/dev/null || { echo "lint failed: $name"; fail=1; }
+  "$SK/scripts/test.sh" "$d" >/dev/null || { echo "tests failed: $name"; fail=1; }
+  echo "checked $name"
+done
+
+# (P5+) qrspi name isolation, (P6+) buggy fixture
 
 printf '\n== result: %s\n' "$([ $fail -eq 0 ] && echo PASS || echo FAIL)"
 exit $fail

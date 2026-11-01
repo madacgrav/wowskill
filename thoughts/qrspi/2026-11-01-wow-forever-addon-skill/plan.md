@@ -773,11 +773,11 @@ end)
 
 ### Verification
 #### Automated
-- [ ] `skills/wow-forever-addon/scripts/test.sh examples/TooltipItemLevel` exits 0
-- [ ] Fresh scaffold with all patterns: `test.sh $d/Demo` exits 0, and `$d/Demo/tests/run.sh` exits 0
-- [ ] `lint.sh examples/TooltipItemLevel` exits 0
-- [ ] Negative check: temporarily break `mergeDefaults` in a scratch copy. `test.sh` must exit 1.
-- [ ] `scripts/check.sh` exits 0
+- [x] `skills/wow-forever-addon/scripts/test.sh examples/TooltipItemLevel` exits 0 (4 passed)
+- [x] Fresh scaffold with all patterns: `test.sh $d/Demo` exits 0, and `$d/Demo/tests/run.sh` exits 0
+- [x] `lint.sh examples/TooltipItemLevel` exits 0 (lint.sh now re-anchors exclude_files/files[] at the target dir, since luacheck resolves config globs relative to the temp config)
+- [x] Negative check: temporarily break `mergeDefaults` in a scratch copy. `test.sh` must exit 1. (1 passed, 1 failed)
+- [x] `scripts/check.sh` exits 0
 
 #### Manual
 - [ ] Post-launch: TooltipItemLevel in-game shows an "Item Level" line on item tooltips, and `/reload` gives no errors

@@ -23,6 +23,7 @@ license: MIT
 | Creating or editing a `.toc` file | `references/toc-format.md` | Holds the single Interface number, plus directives, load order and suffix rules. |
 | Adding or reading persisted settings | `references/saved-variables.md` | SVs are nil until `ADDON_LOADED`, plus the defaults-merge and migration patterns. |
 | Registering events or placing init code | `references/events.md` | Lifecycle order and what each event is for. The full list is in the index. |
+| Writing or running tests, or a stub is missing | `references/testing.md` | The wowmock harness API, how to add stubs, and what it can't catch. |
 
 ## Workflows
 
@@ -32,7 +33,8 @@ license: MIT
 3. **Scaffold**: run `<skill>/scripts/scaffold.sh <Name> --dest <dir> [--pattern event|timer|ui|ldb|tooltip]...`, choosing only the patterns the addon needs.
 4. **Implement** the feature in `Core.lua`, verifying every API name against the index.
 5. **Lint** with `<skill>/scripts/lint.sh <dir>/<Name>` until it's clean.
-6. Hand over with the **in-game checklist** below.
+6. **Test**: add a spec for the feature in `tests/`, then run `<skill>/scripts/test.sh <dir>/<Name>` until it's green.
+7. Hand over with the **in-game checklist** below.
 
 ## Scripts
 
@@ -42,7 +44,8 @@ Scripts live in this skill's folder; references write that folder as `<skill>`. 
 |---|---|
 | `<skill>/scripts/lint.sh <addon-dir or file.lua>` | Run luacheck with the generated Forever std, plus never-emit and unthrottled-`OnUpdate` checks. Non-zero exit means fix before handing over. |
 | `<skill>/scripts/gen-api.sh [--src DIR]` | Regenerate `forever-api-index.md` and the lint std from Gethe/wow-ui-source `forever`. Run after launch and after each patch. |
-| `<skill>/scripts/scaffold.sh <Name> [--pattern p]... [--dest DIR] [--license MIT\|none] [--author A] [--notes TXT]` | Render a vanilla addon (TOC, `Core.lua`, `.luacheckrc`, README, CHANGELOG, LICENSE) with only the selected patterns. |
+| `<skill>/scripts/scaffold.sh <Name> [--pattern p]... [--dest DIR] [--license MIT\|none] [--author A] [--notes TXT]` | Render a vanilla addon (TOC, `Core.lua`, `.luacheckrc`, README, CHANGELOG, LICENSE, `tests/` with the vendored mock) with only the selected patterns. |
+| `<skill>/scripts/test.sh <addon-dir>` | Run `tests/*_spec.lua` offline under LuaJIT with wowmock. Non-zero exit means a failing test. |
 
 ## In-game checklist
 

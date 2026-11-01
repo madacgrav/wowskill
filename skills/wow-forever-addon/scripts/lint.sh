@@ -7,7 +7,16 @@ T="${1:?usage: lint.sh <addon-dir|file.lua>}"
 CFG="$(mktemp)"
 trap 'rm -f "$CFG"' EXIT
 cat "$SK/templates/luacheck/forever-std.lua" "$SK/templates/luacheck/base.luacheckrc" > "$CFG"
-if [ -d "$T" ] && [ -f "$T/.luacheckrc" ]; then cat "$T/.luacheckrc" >> "$CFG"; fi
+# config globs resolve relative to the config file, so re-anchor the path-based rules at the target
+if [ -d "$T" ]; then
+  A="$(cd "$T" && pwd)"
+  cat >> "$CFG" <<EOF
+exclude_files = { "$A/**/Libs/**", "$A/Libs/**", "$A/**/tests/wowmock/**", "$A/tests/wowmock/**", "$A/.release/**" }
+files["$A/tests/**"] = { std = "+busted", read_globals = { "ADDON_DIR" } }
+files["$A/**/tests/**"] = { std = "+busted", read_globals = { "ADDON_DIR" } }
+EOF
+  if [ -f "$T/.luacheckrc" ]; then cat "$T/.luacheckrc" >> "$CFG"; fi
+fi
 
 rc=0
 luacheck --config "$CFG" --codes "$T" || rc=1
