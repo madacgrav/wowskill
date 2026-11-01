@@ -53,7 +53,11 @@ for d in "$ROOT"/examples/*/; do
   echo "checked $name"
 done
 
-# (P5+) qrspi name isolation, (P6+) buggy fixture
+step "qrspi name isolation"
+leaks="$(grep -rl 'qrspi-plan-toolkit:' "$ROOT/skills/" | grep -v 'references/qrspi-handoff.md')"
+if [ -n "$leaks" ]; then echo "qrspi command names outside qrspi-handoff.md:"; echo "$leaks"; fail=1; else echo "isolation OK"; fi
+
+# (P6+) buggy fixture
 
 printf '\n== result: %s\n' "$([ $fail -eq 0 ] && echo PASS || echo FAIL)"
 exit $fail

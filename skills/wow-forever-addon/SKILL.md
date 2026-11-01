@@ -25,6 +25,13 @@ license: MIT
 | Registering events or placing init code | `references/events.md` | Lifecycle order and what each event is for. The full list is in the index. |
 | Writing or running tests, or a stub is missing | `references/testing.md` | The wowmock harness API, how to add stubs, and what it can't catch. |
 | Choosing a scaffold, or adding options, profiles or modules | `references/ace3-vs-vanilla.md` | The vanilla vs `--ace3` decision rule, the Ace3 lifecycle, and soft-embedding libraries. |
+| Work on the planning path (see Routing) | `references/qrspi-handoff.md` | The routing table, the commands, and per-phase WoW inputs, with templates in `templates/qrspi/`. |
+
+## Routing
+
+- **Direct path:** API questions, single-file fixes, one-off debugging, releasing an existing addon. Use the workflows below.
+- **Planning path:** a new addon with 3 or more Lua files, an options UI or Ace3; a meaningful feature (new module, saved-variable schema or frame); or a fork. Hand off to the qrspi-plan-toolkit plugin if its numbered `1-question` … `8-pr` commands are in the available skills list. Otherwise use the direct workflows and mention once that installing that plugin unlocks the structured flow.
+- Before any handoff, read `references/qrspi-handoff.md`. It holds the routing table, the exact commands, and what this skill contributes at each phase.
 
 ## Workflows
 

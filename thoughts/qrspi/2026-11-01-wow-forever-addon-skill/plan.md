@@ -926,8 +926,8 @@ Scaffold smoke adds `scaffold.sh AceDemo --ace3`, then lint, then test.
 
 ### Verification
 #### Automated
-- [ ] `scripts/check.sh` exits 0, including the name-isolation check
-- [ ] `grep -c 'qrspi-plan-toolkit:' skills/wow-forever-addon/references/qrspi-handoff.md` ≥ 8
+- [x] `scripts/check.sh` exits 0, including the name-isolation check
+- [x] `grep -c 'qrspi-plan-toolkit:' skills/wow-forever-addon/references/qrspi-handoff.md` ≥ 8 (11)
 
 #### Manual
 - [ ] With the plugin loaded, "build me a Forever addon with an options panel that tracks warlock soul shards" routes to QRSPI. 1-question produces a `questions.md` containing the WoW questions and no intent. 3-design asks the WoW design questions.
