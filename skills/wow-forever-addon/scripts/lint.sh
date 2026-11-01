@@ -39,7 +39,7 @@ done
 
 # perf heuristic (warning only)
 for f in $FILES; do
-  if grep -q 'SetScript("OnUpdate"' "$f" && ! grep -qE 'elapsed|throttle|THROTTLE' "$f"; then
+  if grep -q 'SetScript("OnUpdate"' "$f" && ! grep -vE '^[[:space:]]*--' "$f" | grep -qE 'elapsed|throttle|THROTTLE'; then
     echo "PERF: unthrottled OnUpdate in $f (see references/performance.md)"
   fi
 done

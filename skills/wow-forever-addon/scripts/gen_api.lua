@@ -52,8 +52,12 @@ end
 assert(#systems > 0, "no documentation tables loaded from " .. docdir)
 
 local ns, docGlobals, events, fxGlobals = {}, {}, {}, {}
+local methodSystems = 0
 for _, s in ipairs(systems) do
-  for _, fn in ipairs(s.Functions or {}) do
+  -- ScriptObject systems document widget methods (Frame:SetPoint, ...), not globals
+  local isMethods = s.Type == "ScriptObject"
+  if isMethods then methodSystems = methodSystems + 1 end
+  for _, fn in ipairs(isMethods and {} or s.Functions or {}) do
     if s.Namespace then
       ns[s.Namespace] = ns[s.Namespace] or {}
       ns[s.Namespace][fn.Name] = true
@@ -140,5 +144,5 @@ fh = assert(io.open(SK .. "/references/forever-api-index.md", "w"))
 fh:write(table.concat(md))
 fh:close()
 
-print(("namespaces=%d docGlobals=%d frameXML=%d events=%d skippedDocs=%d"):format(
-  #sorted(ns), #sorted(docGlobals), #sorted(fxGlobals), #sorted(events), skipped))
+print(("namespaces=%d docGlobals=%d frameXML=%d events=%d skippedDocs=%d methodSystems=%d"):format(
+  #sorted(ns), #sorted(docGlobals), #sorted(fxGlobals), #sorted(events), skipped, methodSystems))

@@ -57,7 +57,31 @@ step "qrspi name isolation"
 leaks="$(grep -rl 'qrspi-plan-toolkit:' "$ROOT/skills/" | grep -v 'references/qrspi-handoff.md')"
 if [ -n "$leaks" ]; then echo "qrspi command names outside qrspi-handoff.md:"; echo "$leaks"; fail=1; else echo "isolation OK"; fi
 
-# (P6+) buggy fixture
+step "buggy fixture (every seeded fault must be caught)"
+BUG="$SK/scripts/fixtures/buggy/Buggy"
+lout="$("$SK/scripts/lint.sh" "$BUG" 2>&1)" && { echo "lint should fail on Buggy"; fail=1; }
+for want in "(W111)" "NEVER-EMIT: UnitAura" "PERF: unthrottled OnUpdate"; do
+  case "$lout" in *"$want"*) ;; *) echo "Buggy lint output missing: $want"; fail=1 ;; esac
+done
+tout="$("$SK/scripts/test.sh" "$BUG" 2>&1)" && { echo "tests should fail on Buggy"; fail=1; }
+for want in "attempt to index global 'BuggyDB'" "FAIL Buggy > does not create frames per event"; do
+  case "$tout" in *"$want"*) ;; *) echo "Buggy test output missing: $want"; fail=1 ;; esac
+done
+[ $fail -eq 0 ] && echo "all 5 seeded faults caught"
+
+step "reference API names"
+# every profiling/taint global named in the references must exist in the index or the lint std
+for n in UpdateAddOnCPUUsage GetAddOnCPUUsage UpdateAddOnMemoryUsage GetAddOnMemoryUsage debugprofilestop \
+         InCombatLockdown hooksecurefunc issecurevariable CreateFrame UIParent GameTooltip TooltipDataProcessor \
+         BackdropTemplate GameFontNormal; do
+  grep -qw "$n" "$SK/references/forever-api-index.md" || grep -q "\"$n\"" "$SK/templates/luacheck/forever-std.lua" \
+    || { echo "reference names unknown API: $n"; fail=1; }
+done
+for e in PLAYER_REGEN_ENABLED ADDON_ACTION_BLOCKED ADDON_ACTION_FORBIDDEN GET_ITEM_INFO_RECEIVED SPELL_DATA_LOAD_RESULT \
+         BAG_UPDATE_DELAYED UNIT_POWER_UPDATE; do
+  grep -q "\`$e\`" "$SK/references/forever-api-index.md" || { echo "reference names unknown event: $e"; fail=1; }
+done
+[ $fail -eq 0 ] && echo "reference names OK"
 
 printf '\n== result: %s\n' "$([ $fail -eq 0 ] && echo PASS || echo FAIL)"
 exit $fail

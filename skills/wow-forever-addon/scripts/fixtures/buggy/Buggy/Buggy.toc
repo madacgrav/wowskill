@@ -1,0 +1,6 @@
+## Interface: 16001
+## Title: Buggy
+## Notes: Seeded-fault fixture. lint.sh and test.sh must both flag it (see scripts/check.sh).
+## SavedVariables: BuggyDB
+
+Core.lua

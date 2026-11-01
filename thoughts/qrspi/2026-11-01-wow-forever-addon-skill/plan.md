@@ -985,8 +985,8 @@ Add `Env:frame_count()` to the mock if it's convenient. Otherwise use `#env.fram
 
 ### Verification
 #### Automated
-- [ ] `scripts/check.sh` exits 0, including all five buggy-fixture expectations (fault 5 shows up as a failing spec name in `test.sh` output)
-- [ ] Every profiling and API name in performance.md, taint-and-secure.md and widgets.md appears in `forever-api-index.md` or `forever-std.lua`. Check with a small `grep` loop listed in the file's footer.
+- [x] `scripts/check.sh` exits 0, including all five buggy-fixture expectations (fault 5 shows up as a failing spec name in `test.sh` output) (OnUpdate heuristic now ignores comment lines)
+- [x] Every profiling and API name in performance.md, taint-and-secure.md and widgets.md appears in `forever-api-index.md` or `forever-std.lua`. The grep loop lives in check.sh's "reference API names" step rather than the file footer. Also fixed gen_api.lua: ScriptObject doc systems (81, widget methods like `SetPoint`) are no longer emitted as globals, so docGlobals went 1919 → 734.
 
 #### Manual
 - [ ] One real debugging session (a pasted BugSack trace) follows the workflow end to end
