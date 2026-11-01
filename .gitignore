@@ -1,0 +1,8 @@
+.release/
+*.skill
+.cache/
+evals/results/
+*-workspace/
+.env
+.DS_Store
+__pycache__/
