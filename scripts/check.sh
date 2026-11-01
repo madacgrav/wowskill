@@ -22,7 +22,22 @@ for want in "NEVER-EMIT: GetContainerItemInfo" "(W113)" "(W143)" "(W111)"; do
 done
 [ $fail -eq 0 ] && echo "fixtures OK"
 
-# (P2+) scaffold smoke, (P3+) tests, (P5+) qrspi name isolation, (P6+) buggy fixture
+step "scaffold smoke"
+TMP="$(mktemp -d)"
+trap 'rm -rf "$TMP"' EXIT
+n=0
+for pats in "" "event" "timer" "ui" "ldb" "tooltip" "event timer ui ldb tooltip"; do
+  n=$((n + 1))
+  args=""
+  for p in $pats; do args="$args --pattern $p"; done
+  # shellcheck disable=SC2086
+  "$SK/scripts/scaffold.sh" Demo --dest "$TMP/$n" $args >/dev/null || { echo "scaffold failed: [$pats]"; fail=1; continue; }
+  if grep -rqE '__[A-Z]+__|@pattern:|@end-pattern@' "$TMP/$n/Demo"; then echo "leftover tokens: [$pats]"; fail=1; fi
+  "$SK/scripts/lint.sh" "$TMP/$n/Demo" >/dev/null || { echo "lint failed: [$pats]"; fail=1; }
+done
+[ $fail -eq 0 ] && echo "scaffold smoke OK ($n variants)"
+
+# (P3+) tests, (P5+) qrspi name isolation, (P6+) buggy fixture
 
 printf '\n== result: %s\n' "$([ $fail -eq 0 ] && echo PASS || echo FAIL)"
 exit $fail

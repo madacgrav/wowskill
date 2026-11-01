@@ -21,8 +21,18 @@ license: MIT
 | Writing or reviewing any WoW API call | `references/forever-api-index.md` | The generated list of every documented Forever namespace, function and event. If a name isn't there, don't emit it. |
 | Porting code from Classic Era or Retail, or using an API from memory | `references/forever-api-notes.md` | What differs from Retail 12.1.5, the never-emit list and its replacements, and the secret-values caveat. |
 | Creating or editing a `.toc` file | `references/toc-format.md` | Holds the single Interface number, plus directives, load order and suffix rules. |
+| Adding or reading persisted settings | `references/saved-variables.md` | SVs are nil until `ADDON_LOADED`, plus the defaults-merge and migration patterns. |
+| Registering events or placing init code | `references/events.md` | Lifecycle order and what each event is for. The full list is in the index. |
 
 ## Workflows
+
+### New addon (simple)
+1. **Clarify** in at most 3 questions: what it shows or does, what triggers it, and whether it has UI.
+2. **Gap analysis**: check whether an existing addon already covers it (see the gap-analysis workflow) and recommend use / fork / build.
+3. **Scaffold**: run `<skill>/scripts/scaffold.sh <Name> --dest <dir> [--pattern event|timer|ui|ldb|tooltip]...`, choosing only the patterns the addon needs.
+4. **Implement** the feature in `Core.lua`, verifying every API name against the index.
+5. **Lint** with `<skill>/scripts/lint.sh <dir>/<Name>` until it's clean.
+6. Hand over with the **in-game checklist** below.
 
 ## Scripts
 
@@ -32,5 +42,14 @@ Scripts live in this skill's folder; references write that folder as `<skill>`. 
 |---|---|
 | `<skill>/scripts/lint.sh <addon-dir or file.lua>` | Run luacheck with the generated Forever std, plus never-emit and unthrottled-`OnUpdate` checks. Non-zero exit means fix before handing over. |
 | `<skill>/scripts/gen-api.sh [--src DIR]` | Regenerate `forever-api-index.md` and the lint std from Gethe/wow-ui-source `forever`. Run after launch and after each patch. |
+| `<skill>/scripts/scaffold.sh <Name> [--pattern p]... [--dest DIR] [--license MIT\|none] [--author A] [--notes TXT]` | Render a vanilla addon (TOC, `Core.lua`, `.luacheckrc`, README, CHANGELOG, LICENSE) with only the selected patterns. |
 
 ## In-game checklist
+
+End every scaffold or edit with these steps. Offline lint and tests cannot catch taint, rendering or real client behaviour.
+
+1. Copy or symlink the addon folder to `World of Warcraft/_forever_/Interface/AddOns/<Name>`.
+2. `/reload`, then confirm there are no errors (install BugSack and BugGrabber to capture them).
+3. Exercise the feature: run each slash command, and trigger each event the addon handles.
+4. `/fstack` to check frame placement and strata.
+5. `/etrace` to confirm the expected events fire.

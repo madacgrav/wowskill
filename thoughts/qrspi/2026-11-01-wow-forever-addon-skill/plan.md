@@ -540,10 +540,10 @@ Add a "scaffold smoke" step. For each set in `"" "--pattern event" "--pattern ti
 
 ### Verification
 #### Automated
-- [ ] `d=$(mktemp -d); skills/wow-forever-addon/scripts/scaffold.sh Demo --dest $d && skills/wow-forever-addon/scripts/lint.sh $d/Demo` exits 0
-- [ ] Same for each `--pattern` value, plus all five patterns together
-- [ ] `grep -q '^## Interface: 16001' $d/Demo/Demo.toc` and no leftover `__` tokens: `! grep -rn '__[A-Z]*__' $d/Demo`
-- [ ] `scripts/check.sh` exits 0
+- [x] `d=$(mktemp -d); skills/wow-forever-addon/scripts/scaffold.sh Demo --dest $d && skills/wow-forever-addon/scripts/lint.sh $d/Demo` exits 0
+- [x] Same for each `--pattern` value, plus all five patterns together (7 variants in check.sh; added `read_globals = { "LibStub" }` to base.luacheckrc for the ldb pattern; addon `.luacheckrc` appends to `globals` so the base `SlashCmdList` entry survives)
+- [x] `grep -q '^## Interface: 16001' $d/Demo/Demo.toc` and no leftover `__` tokens: `! grep -rn '__[A-Z]*__' $d/Demo`
+- [x] `scripts/check.sh` exits 0
 
 #### Manual (post-launch, ≥ 2026-11-04)
 - [ ] Copy `Demo` into `Interface/AddOns`, `/reload`: no errors. `/demo debug` toggles. `/demo show` toggles the window for the ui pattern.
