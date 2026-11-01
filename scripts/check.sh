@@ -14,7 +14,15 @@ else
   python3 "$ROOT/scripts/check_frontmatter.py" "$SK" || fail=1
 fi
 
-# (P1+) lint fixtures, (P2+) scaffold smoke, (P3+) tests, (P5+) qrspi name isolation, (P6+) buggy fixture
+step "lint fixtures"
+"$SK/scripts/lint.sh" "$SK/scripts/fixtures/good.lua" >/dev/null || { echo "good.lua should pass lint"; fail=1; }
+out="$("$SK/scripts/lint.sh" "$SK/scripts/fixtures/bad.lua" 2>&1)" && { echo "bad.lua should fail lint"; fail=1; }
+for want in "NEVER-EMIT: GetContainerItemInfo" "(W113)" "(W143)" "(W111)"; do
+  case "$out" in *"$want"*) ;; *) echo "bad.lua lint output missing: $want"; fail=1 ;; esac
+done
+[ $fail -eq 0 ] && echo "fixtures OK"
+
+# (P2+) scaffold smoke, (P3+) tests, (P5+) qrspi name isolation, (P6+) buggy fixture
 
 printf '\n== result: %s\n' "$([ $fail -eq 0 ] && echo PASS || echo FAIL)"
 exit $fail

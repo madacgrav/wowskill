@@ -18,6 +18,9 @@ license: MIT
 
 | Situation | Read first | Why |
 |---|---|---|
+| Writing or reviewing any WoW API call | `references/forever-api-index.md` | The generated list of every documented Forever namespace, function and event. If a name isn't there, don't emit it. |
+| Porting code from Classic Era or Retail, or using an API from memory | `references/forever-api-notes.md` | What differs from Retail 12.1.5, the never-emit list and its replacements, and the secret-values caveat. |
+| Creating or editing a `.toc` file | `references/toc-format.md` | Holds the single Interface number, plus directives, load order and suffix rules. |
 
 ## Workflows
 
@@ -27,5 +30,7 @@ Scripts live in this skill's folder; references write that folder as `<skill>`. 
 
 | Command | Purpose |
 |---|---|
+| `<skill>/scripts/lint.sh <addon-dir or file.lua>` | Run luacheck with the generated Forever std, plus never-emit and unthrottled-`OnUpdate` checks. Non-zero exit means fix before handing over. |
+| `<skill>/scripts/gen-api.sh [--src DIR]` | Regenerate `forever-api-index.md` and the lint std from Gethe/wow-ui-source `forever`. Run after launch and after each patch. |
 
 ## In-game checklist

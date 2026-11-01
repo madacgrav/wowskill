@@ -297,12 +297,12 @@ Note: the `grep -nwF` for `this` could false-positive on comments. The `grep -v`
 
 ### Verification
 #### Automated
-- [ ] `skills/wow-forever-addon/scripts/gen-api.sh` exits 0 and prints counts with namespaces > 100
-- [ ] `grep -c '^## C_' skills/wow-forever-addon/references/forever-api-index.md` > 100, and `grep -E '^## (C_Container|C_UnitAuras|C_SwingTimer)$'` matches all three
-- [ ] Never-emit report reviewed and notes edited per the rule in §3
-- [ ] `skills/wow-forever-addon/scripts/lint.sh skills/wow-forever-addon/scripts/fixtures/good.lua` exits 0
-- [ ] `lint.sh fixtures/bad.lua` exits non-zero with `NEVER-EMIT: GetContainerItemInfo`, `W113` (C_Fake) and `W143` (NotARealFunction)
-- [ ] `scripts/check.sh` exits 0
+- [x] `skills/wow-forever-addon/scripts/gen-api.sh` exits 0 and prints counts with namespaces > 100 (namespaces=262, docGlobals=1919, frameXML=19466, events=1814, skippedDocs=0 after adding Enum/Constants auto-vivify stubs)
+- [x] `grep -c '^## C_' skills/wow-forever-addon/references/forever-api-index.md` > 100 (259), and `grep -E '^## (C_Container|C_UnitAuras|C_SwingTimer)$'` matches all three
+- [x] Never-emit report reviewed and notes edited per the rule in §3 (all 16 candidates "absent"; all replacements present)
+- [x] `skills/wow-forever-addon/scripts/lint.sh skills/wow-forever-addon/scripts/fixtures/good.lua` exits 0 (after fixing never-emit grep to match bare names only)
+- [x] `lint.sh fixtures/bad.lua` exits non-zero with `NEVER-EMIT: GetContainerItemInfo`, `W113` (C_Fake) and `W143` (NotARealFunction)
+- [x] `scripts/check.sh` exits 0
 
 #### Manual
 - [ ] Spot-check five never-emit decisions against the `forever` branch on GitHub
