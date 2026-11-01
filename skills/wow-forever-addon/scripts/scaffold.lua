@@ -79,7 +79,8 @@ local tpl = SK .. "/templates/" .. (opt.ace3 and "ace3" or "vanilla")
 for _, rel in ipairs(files(tpl)) do
   write(root .. "/" .. rel:gsub("__NAME__", NAME), render(read(tpl .. "/" .. rel)))
 end
-local common = { ["README.addon.md"] = "README.md", ["CHANGELOG.md"] = "CHANGELOG.md" }
+local common = { ["README.addon.md"] = "README.md", ["CHANGELOG.md"] = "CHANGELOG.md",
+  [".pkgmeta"] = ".pkgmeta", ["release.yml"] = ".github/workflows/release.yml" }
 if opt.license ~= "none" then common["LICENSE.MIT"] = "LICENSE" end
 for src, dst in pairs(common) do
   write(root .. "/" .. dst, render(read(SK .. "/templates/common/" .. src)))

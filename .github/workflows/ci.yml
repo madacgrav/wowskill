@@ -1,0 +1,13 @@
+name: check
+
+on: [push, pull_request]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      # Ubuntu's lua-check package provides the luacheck binary. If it ever disappears, switch to
+      # leafo/gh-actions-lua (luaVersion: luajit-2.1) + leafo/gh-actions-luarocks + `luarocks install luacheck`.
+      - run: sudo apt-get update && sudo apt-get install -y luajit lua-check
+      - run: scripts/check.sh

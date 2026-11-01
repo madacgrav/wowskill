@@ -30,6 +30,7 @@ license: MIT
 | `OnUpdate`, polling, hot paths, or a performance review | `references/performance.md` | Throttling, frame and table reuse, and the in-game CPU and memory profiling commands. |
 | Building frames, text, textures or layout | `references/widgets.md` | Frame types, templates, anchors, strata, regions and tooltips. |
 | Before scaffolding any new addon | `references/curseforge-gap-analysis.md` | The search procedure, report table, and use / fork / build verdict. |
+| Packaging, tagging, uploads, or `.pkgmeta` / `release.yml` | `references/release-pipeline.md` | How the packager detects Forever, the secrets, the local dry run, and the release checklist. |
 
 ## Routing
 
@@ -78,6 +79,11 @@ For a performance review, add the checklist and in-game profiling from `performa
 1. Answer from `references/`. Check the name in `forever-api-index.md` first, then `forever-api-notes.md`.
 2. If it isn't covered, search warcraft.wiki.gg or the Gethe/wow-ui-source `forever` docs, and label the answer **verified / reported / unverified** for Forever.
 3. Offer to record new findings in `forever-api-notes.md` or `events.md`, with source and date.
+
+### Release
+1. Confirm `.pkgmeta`, `.github/workflows/release.yml`, and the TOC `X-Curse-Project-ID` / `X-Wago-ID` lines exist, and that the repo has the `CF_API_TOKEN` and `WAGO_API_TOKEN` secrets.
+2. Optionally do a local dry run (`release-pipeline.md`) and confirm the zip has no dev files.
+3. Work through the `/release` checklist in `references/release-pipeline.md`. Ask before pushing the tag, since it publishes.
 
 ## Scripts
 

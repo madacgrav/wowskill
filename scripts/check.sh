@@ -40,6 +40,9 @@ done
 "$SK/scripts/scaffold.sh" AceDemo --ace3 --dest "$TMP/ace" >/dev/null || { echo "ace3 scaffold failed"; fail=1; }
 "$SK/scripts/lint.sh" "$TMP/ace/AceDemo" >/dev/null || { echo "lint failed: ace3"; fail=1; }
 "$SK/scripts/test.sh" "$TMP/ace/AceDemo" >/dev/null || { echo "tests failed: ace3"; fail=1; }
+grep -q '^externals:' "$TMP/ace/AceDemo/.pkgmeta" || { echo "ace3 .pkgmeta missing externals"; fail=1; }
+grep -q '^externals:' "$TMP/1/Demo/.pkgmeta" && { echo "vanilla .pkgmeta should not have externals"; fail=1; }
+[ -f "$TMP/1/Demo/.github/workflows/release.yml" ] || { echo "release.yml not scaffolded"; fail=1; }
 diff -rq "$SK/scripts/wowmock" "$ROOT/examples/TooltipItemLevel/tests/wowmock" >/dev/null \
   || { echo "examples/TooltipItemLevel/tests/wowmock is stale: re-copy from $SK/scripts/wowmock"; fail=1; }
 [ $fail -eq 0 ] && echo "scaffold smoke OK ($n variants, lint + tests)"

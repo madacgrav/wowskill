@@ -1088,11 +1088,11 @@ jobs:
 
 ### Verification
 #### Automated
-- [ ] `scripts/check.sh` exits 0 (examples still lint- and test-green with the new files)
-- [ ] Local dry run: `$(brew --prefix)/bin/bash /tmp/release.sh -d -t examples/TooltipItemLevel` exits 0
-- [ ] `unzip -l examples/TooltipItemLevel/.release/*.zip` lists no `tests/`, `thoughts/` or `.github/`
-- [ ] `unzip -p … TooltipItemLevel/TooltipItemLevel.toc | grep '## Version:'` shows no literal `@project-version@`
-- [ ] Scaffold smoke for Ace3: the rendered `.pkgmeta` contains `externals:`. The vanilla one does not.
+- [x] `scripts/check.sh` exits 0 (examples still lint- and test-green with the new files)
+- [x] Local dry run: `$(brew --prefix)/bin/bash /tmp/release.sh -d -t examples/TooltipItemLevel` exits 0 (the packager refuses subfolders, "No Git, SVN, or Hg checkout found", so it ran on a scratch copy as its own repo tagged v0.1.0 → `TooltipItemLevel-v0.1.0-forever.zip`; docs updated)
+- [x] `unzip -l examples/TooltipItemLevel/.release/*.zip` lists no `tests/`, `thoughts/` or `.github/`
+- [x] `unzip -p … TooltipItemLevel/TooltipItemLevel.toc | grep '## Version:'` shows no literal `@project-version@` (`## Version: v0.1.0`)
+- [x] Scaffold smoke for Ace3: the rendered `.pkgmeta` contains `externals:`. The vanilla one does not. (Externals URLs probed HTTP 200; actions/checkout@v7 confirmed as latest v7.0.1.)
 - [ ] Push a branch: `ci.yml` is green on GitHub (`gh run list --workflow check --limit 1`)
 
 #### Manual (owner-gated)
