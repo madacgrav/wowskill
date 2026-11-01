@@ -1,6 +1,6 @@
 {
   "name": "wow-forever-addon",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Build, test and release World of Warcraft: Forever (Classic+) addons with Claude Code.",
   "author": {
     "name": "Adam Graves",

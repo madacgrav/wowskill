@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: qrspi-routing
+expected_outcome: |
+  Because the addon is above the planning threshold (options UI, profiles, several files), the response
+  does not start writing addon Lua. It routes to the QRSPI planning flow (if the qrspi-plan-toolkit
+  commands are available) or, if they are not, says once that installing that plugin unlocks the
+  structured flow. It also proposes a CurseForge gap analysis before any build.

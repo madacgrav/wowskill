@@ -1093,7 +1093,7 @@ jobs:
 - [x] `unzip -l examples/TooltipItemLevel/.release/*.zip` lists no `tests/`, `thoughts/` or `.github/`
 - [x] `unzip -p … TooltipItemLevel/TooltipItemLevel.toc | grep '## Version:'` shows no literal `@project-version@` (`## Version: v0.1.0`)
 - [x] Scaffold smoke for Ace3: the rendered `.pkgmeta` contains `externals:`. The vanilla one does not. (Externals URLs probed HTTP 200; actions/checkout@v7 confirmed as latest v7.0.1.)
-- [ ] Push a branch: `ci.yml` is green on GitHub (`gh run list --workflow check --limit 1`)
+- [x] Push a branch: `ci.yml` is green on GitHub (`gh run list --workflow check --limit 1`) (run 41338780736 passed on Ubuntu with apt `luajit` + `lua-check`)
 
 #### Manual (owner-gated)
 - [ ] Create CurseForge and Wago projects for the example, add `X-Curse-Project-ID`/`X-Wago-ID` and the repo secrets, push `v0.1.0`, and confirm both uploads list the Forever flavor
@@ -1153,9 +1153,11 @@ PYTHONPATH="$SC" python3 -m scripts.run_eval --eval-set evals/trigger-set.json -
 
 ### Verification
 #### Automated
-- [ ] `jq '.summary.passed / .summary.total' evals/results/trigger.json` ≥ 0.85
-- [ ] `scripts/check.sh` exits 0 locally, and the CI `check` run is green
-- [ ] `git tag v1.0.0` on the merged main
+- [ ] `jq '.summary.passed / .summary.total' evals/results/trigger.json` ≥ 0.85 (BLOCKED 2026-11-01: no macOS `claude` CLI on PATH; the desktop app's bundled `claude-code-vm/2.1.309/claude` is a Linux binary, "exec format error". Install the CLI, then run the commands in §3.)
+- [ ] `scripts/check.sh` exits 0 locally, and the CI `check` run is green (local: passes; CI: pending push)
+- [ ] `git tag v1.0.0` on the merged main (after the PR merges)
+
+Note: behavior cases live in `skills/wow-forever-addon/evals/<case>/`, the layout `claude plugin eval` reads per skill-creator `schemas.md`. The trigger set stays at repo-root `evals/trigger-set.json`.
 
 #### Manual
 - [ ] All three behavior cases pass, by grader or by hand
