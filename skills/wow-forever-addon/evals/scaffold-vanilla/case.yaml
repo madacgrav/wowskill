@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: scaffold-vanilla
+expected_outcome: |
+  A ShardCount addon folder is created with scaffold.sh (vanilla, no Ace3), with a TOC using the
+  Interface number from toc-format.md. Core.lua prints the soul shard count at PLAYER_LOGIN using an API
+  present in the Forever index. lint.sh and test.sh are run and pass, and the reply ends with the in-game checklist.

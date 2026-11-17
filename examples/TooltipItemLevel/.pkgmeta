@@ -1,0 +1,15 @@
+package-as: TooltipItemLevel
+
+manual-changelog:
+  filename: CHANGELOG.md
+  markup-type: markdown
+
+enable-nolib-creation: no
+
+ignore:
+  - tests
+  - thoughts
+  - .github
+  - .luacheckrc
+  - .pkgmeta
+  - .gitignore

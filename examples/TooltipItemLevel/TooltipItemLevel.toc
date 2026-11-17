@@ -1,0 +1,11 @@
+## Interface: 16001
+## Title: TooltipItemLevel
+## Notes: Shows the item level on item tooltips.
+## Author: Adam Graves
+## Version: @project-version@
+## SavedVariables: TooltipItemLevelDB
+## SavedVariablesPerCharacter: TooltipItemLevelCharDB
+# ## X-Curse-Project-ID: <id>   (uncomment after creating the project; see release-pipeline.md)
+# ## X-Wago-ID: <id>
+
+Core.lua

@@ -1,0 +1,11 @@
+{
+  "name": "wow-forever-addon",
+  "version": "1.0.0",
+  "description": "Build, test and release World of Warcraft: Forever (Classic+) addons with Claude Code.",
+  "author": {
+    "name": "Adam Graves",
+    "email": "madacgrav@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": ["wow", "warcraft", "addon", "lua", "forever", "classic-plus"]
+}

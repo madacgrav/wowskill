@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: retail-api-trap
+expected_outcome: |
+  The response does not use the global UnitAura (it is on the never-emit list). It explains that
+  UnitAura is not available in Forever and implements HasDemonArmor with C_UnitAuras (for example
+  GetAuraDataByIndex or GetBuffDataByIndex) as listed in the Forever API index. The saved file passes lint.sh.

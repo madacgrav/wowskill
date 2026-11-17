@@ -1,0 +1,14 @@
+{
+  "name": "wow-forever-addon-marketplace",
+  "owner": {
+    "name": "Adam Graves",
+    "email": "madacgrav@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "wow-forever-addon",
+      "source": "./",
+      "description": "Build, test and release World of Warcraft: Forever (Classic+) addons: Forever API surface, vanilla/Ace3 scaffolds, luacheck, offline mock harness, CurseForge/Wago release pipeline, QRSPI handoff."
+    }
+  ]
+}

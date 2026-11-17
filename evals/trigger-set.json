@@ -1,0 +1,22 @@
+[
+  { "query": "scaffold a WoW Forever addon that shows my soul shard count", "should_trigger": true },
+  { "query": "why does my addon throw attempt to index nil in BugSack right after I log in", "should_trigger": true },
+  { "query": "what's the Forever API for reading container items in my bags", "should_trigger": true },
+  { "query": "set up CurseForge and Wago releases for my World of Warcraft addon", "should_trigger": true },
+  { "query": "my .toc Interface number is wrong and the addon shows as out of date", "should_trigger": true },
+  { "query": "add an options panel with Ace3 profiles to my addon", "should_trigger": true },
+  { "query": "my CreateFrame OnUpdate handler is lagging the game, how do I fix it", "should_trigger": true },
+  { "query": "SavedVariables are nil when my addon loads on login", "should_trigger": true },
+  { "query": "is there already a CurseForge addon for tracking hunter pet happiness on Classic+", "should_trigger": true },
+  { "query": "port this Classic Era addon to WoW Forever", "should_trigger": true },
+  { "query": "give me a luacheck config with WoW globals for my addon", "should_trigger": true },
+  { "query": "Classic+ addon idea: a rogue poison reminder when I enter an instance", "should_trigger": true },
+  { "query": "write a Python script to parse a CSV of sales and total by month", "should_trigger": false },
+  { "query": "explain how Lua metatables and __index work", "should_trigger": false },
+  { "query": "build a Roblox Lua script for a sword that deals damage", "should_trigger": false },
+  { "query": "set up my Neovim config in Lua with lazy.nvim", "should_trigger": false },
+  { "query": "what's the best warlock talent build for raiding in WoW", "should_trigger": false },
+  { "query": "make a Discord bot that posts my guild's raid schedule", "should_trigger": false },
+  { "query": "write a Minecraft Fabric mod that adds a new ore", "should_trigger": false },
+  { "query": "create a GitHub Actions workflow that tests a Node app", "should_trigger": false }
+]
