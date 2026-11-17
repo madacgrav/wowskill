@@ -1,4 +1,4 @@
--- GameTooltip, TooltipDataProcessor and C_Item stubs. opts.items[itemID] = { ilvl = n, name = s }.
+-- GameTooltip, TooltipDataProcessor and C_Item stubs. opts.items[itemID] = { ilvl = n, name = s, count = n }.
 local M = {}
 
 function M.install(env, api)
@@ -23,6 +23,10 @@ function M.install(env, api)
     GetItemInfo = function(id)
       local it = item(id)
       if it then return it.name end
+    end,
+    GetItemCount = function(id)
+      local it = item(id)
+      return it and it.count or 0
     end,
   }
 
