@@ -12,6 +12,7 @@ license: MIT
 - **The TOC Interface number lives in one place:** `references/toc-format.md`. Read it from there; never hard-code it elsewhere.
 - **Verify every API name** against `references/forever-api-index.md` before emitting it. Do not rely on memory of Retail or Classic.
 - **Never emit** names on the never-emit list in `references/forever-api-notes.md`.
+- **Retail API, vanilla data.** A name being in the index does not mean it returns Retail-era data: soul shards are bag items, pets have happiness, and more. Before using any power type, enum or resource that Retail introduced, read the "Vanilla-era game data" section of `references/forever-api-notes.md`.
 - **Lint and test before handing anything over**, then always finish with the in-game checklist below.
 
 ## Read before you touch
@@ -45,7 +46,7 @@ Classify the request before reading templates, running any script or writing Lua
 ### New addon (simple)
 1. **Clarify** in at most 3 questions: what it shows or does, what triggers it, and whether it has UI.
 2. **Gap analysis**: follow `references/curseforge-gap-analysis.md`, then show the report table and a use / fork / build verdict. Stop on **use**. On **fork**, take the planning path.
-3. **Scaffold**: choose vanilla or `--ace3` per `references/ace3-vs-vanilla.md`, then run `<skill>/scripts/scaffold.sh <Name> --dest <dir> [--ace3] [--pattern event|timer|ui|ldb|tooltip]...`. Patterns apply to vanilla only; select just the ones the addon needs.
+3. **Scaffold**: choose vanilla or `--ace3` per `references/ace3-vs-vanilla.md`, then run `<skill>/scripts/scaffold.sh <Name> --dest <dir> [--ace3] [--pattern event|timer|ui|ldb|tooltip]...`. Patterns apply to vanilla only; select just the ones the addon needs. Always scaffold, even for a two-line addon: the script is cheaper than writing the TOC by hand and brings the `.luacheckrc` and the `tests/` harness that steps 5 and 6 need. An instruction to keep things minimal is a reason to pick zero patterns, not to skip the script.
 4. **Implement** the feature in `Core.lua`, verifying every API name against the index.
 5. **Lint** with `<skill>/scripts/lint.sh <dir>/<Name>` until it's clean.
 6. **Test**: add a spec for the feature in `tests/`, then run `<skill>/scripts/test.sh <dir>/<Name>` until it's green.
