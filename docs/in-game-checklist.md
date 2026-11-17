@@ -147,5 +147,5 @@ Result / notes: all pass on 2026-11-17.
 ## 8. Wrap-up
 
 - [x] Tick the matching manual boxes in `thoughts/qrspi/2026-11-01-wow-forever-addon-skill/plan.md`. (2026-11-17: P2, P3, P4 in-game and the post-launch line ticked.)
-- [ ] Commit any fixes (Interface, notes, never-emit list, mock stubs), and confirm `scripts/check.sh` and CI are green.
-- [ ] Merge PR #1, then `git tag v1.0.0 && git push --tags`.
+- [x] Commit any fixes (Interface, notes, never-emit list, mock stubs), and confirm `scripts/check.sh` and CI are green. (2026-11-17: `b0593e7` plus the Windows toolchain merge `3c0dcd1`; check.sh PASS in Git Bash and WSL, CI green on the branch and on main.)
+- [x] Merge PR #1, then `git tag v1.0.0 && git push --tags`. (2026-11-17: merged as `38f6ebd`, tag `v1.0.0` pushed.)
