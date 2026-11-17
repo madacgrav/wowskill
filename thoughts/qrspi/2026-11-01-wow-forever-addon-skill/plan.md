@@ -1154,8 +1154,8 @@ PYTHONPATH="$SC" python3 -m scripts.run_eval --eval-set evals/trigger-set.json -
 ### Verification
 #### Automated
 - [x] `jq '.summary.passed / .summary.total' evals/results/trigger.json` ≥ 0.85 (BLOCKED 2026-11-01: no macOS `claude` CLI on PATH; the desktop app's bundled `claude-code-vm/2.1.309/claude` is a Linux binary, "exec format error". Install the CLI, then run the commands in §3.) (done 2026-11-17: 18/20 = 0.90 with a Windows runner; see docs/in-game-checklist.md §7)
-- [ ] `scripts/check.sh` exits 0 locally, and the CI `check` run is green (local: passes; CI: pending push)
-- [ ] `git tag v1.0.0` on the merged main (after the PR merges)
+- [x] `scripts/check.sh` exits 0 locally, and the CI `check` run is green (2026-11-17: local Git Bash and WSL pass; CI green on 3c0dcd1 and on main 38f6ebd)
+- [x] `git tag v1.0.0` on the merged main (after the PR merges) (2026-11-17: tagged 38f6ebd, pushed)
 
 Note: behavior cases live in `skills/wow-forever-addon/evals/<case>/`, the layout `claude plugin eval` reads per skill-creator `schemas.md`. The trigger set stays at repo-root `evals/trigger-set.json`.
 
