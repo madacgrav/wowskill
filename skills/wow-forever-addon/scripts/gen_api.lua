@@ -19,6 +19,17 @@ local function lines(cmd)
   return t
 end
 
+-- files matching pat in dir (recursive = whole tree); native luajit.exe on Windows shells out to cmd.exe
+local WIN = package.config:sub(1, 1) == "\\"
+local function glob(dir, pat, recursive)
+  if not WIN then
+    return lines(recursive and ('find "' .. dir .. '" -name "' .. pat .. '"') or ('ls "' .. dir .. '"/' .. pat))
+  end
+  local t = lines('dir /b /a-d ' .. (recursive and "/s " or "") .. '"' .. (dir .. "/" .. pat):gsub("/", "\\") .. '"')
+  if not recursive then for i, f in ipairs(t) do t[i] = dir .. "/" .. f end end
+  return t
+end
+
 local function sorted(set)
   local t = {}
   for k in pairs(set) do t[#t + 1] = k end
@@ -40,7 +51,7 @@ end
 Enum, Constants = autoviv(), autoviv()
 local docdir = SRC .. "/Interface/AddOns/Blizzard_APIDocumentationGenerated"
 local skipped = 0
-for _, f in ipairs(lines('ls "' .. docdir .. '"/*.lua')) do
+for _, f in ipairs(glob(docdir, "*.lua")) do
   local chunk, err = loadfile(f)
   local ok, perr = false, nil
   if chunk then ok, perr = pcall(chunk) end
@@ -71,13 +82,13 @@ for _, s in ipairs(systems) do
 end
 
 -- 2) FrameXML globals: top-level `function Name(` / `Name =` in Lua, `name="X"` in XML
-for _, f in ipairs(lines('find "' .. SRC .. '/Interface" -name "*.lua"')) do
+for _, f in ipairs(glob(SRC .. "/Interface", "*.lua", true)) do
   for l in io.lines(f) do
     local n = l:match("^function%s+([%a_][%w_]*)%s*%(") or l:match("^([%a_][%w_]*)%s*=[^=]")
     if n and n ~= "local" and not ns[n] then fxGlobals[n] = true end
   end
 end
-for _, f in ipairs(lines('find "' .. SRC .. '/Interface" -name "*.xml"')) do
+for _, f in ipairs(glob(SRC .. "/Interface", "*.xml", true)) do
   local fh = io.open(f)
   local s = fh:read("*a")
   fh:close()
@@ -121,7 +132,7 @@ for _, g in ipairs(sorted(all)) do
   if not ns[g] then out[#out + 1] = "  " .. q(g) .. ",\n" end
 end
 out[#out + 1] = "} }\n"
-local fh = assert(io.open(SK .. "/templates/luacheck/forever-std.lua", "w"))
+local fh = assert(io.open(SK .. "/templates/luacheck/forever-std.lua", "wb"))
 fh:write(table.concat(out))
 fh:close()
 
@@ -140,7 +151,7 @@ md[#md + 1] = "\n## Global functions (documented)\n" .. table.concat(sorted(docG
 md[#md + 1] = ("\nFrameXML/C globals allowed by lint: %d (see templates/luacheck/forever-std.lua)\n"):format(#sorted(fxGlobals))
 md[#md + 1] = "\n## Events\n"
 for _, e in ipairs(sorted(events)) do md[#md + 1] = ("- `%s` (%s)\n"):format(e, events[e]) end
-fh = assert(io.open(SK .. "/references/forever-api-index.md", "w"))
+fh = assert(io.open(SK .. "/references/forever-api-index.md", "wb"))
 fh:write(table.concat(md))
 fh:close()
 

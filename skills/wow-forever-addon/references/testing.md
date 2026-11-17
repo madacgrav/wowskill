@@ -1,6 +1,6 @@
 # Offline testing with wowmock
 
-Read this before writing or running addon tests. Every scaffolded addon ships `tests/core_spec.lua`, a vendored copy of the mock in `tests/wowmock/`, and `tests/run.sh`. Run the tests with `tests/run.sh` or `<skill>/scripts/test.sh <addon-dir>`. Both need only `luajit`.
+Read this before writing or running addon tests. Every scaffolded addon ships `tests/core_spec.lua`, a vendored copy of the mock in `tests/wowmock/`, and `tests/run.sh`. Run the tests with `tests/run.sh` or `<skill>/scripts/test.sh <addon-dir>`. Both need only `luajit`. On Windows use Git Bash with native `luajit.exe` (and `luacheck.exe` for `lint.sh`) on `PATH`; the scripts convert paths with `cygpath` themselves.
 
 ## Writing a spec
 

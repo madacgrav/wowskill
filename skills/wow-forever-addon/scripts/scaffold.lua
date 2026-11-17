@@ -26,14 +26,18 @@ local VALID = { event = true, timer = true, ui = true, ldb = true, tooltip = tru
 for p in pairs(opt.patterns) do if not VALID[p] then die("unknown pattern " .. p) end end
 opt.patterns.ace3 = opt.ace3
 
+-- native luajit.exe (Git Bash on Windows) runs os.execute/io.popen through cmd.exe
+local WIN = package.config:sub(1, 1) == "\\"
+local NUL = WIN and "nul" or "/dev/null"
 local function read(p) local f = assert(io.open(p, "rb")); local s = f:read("*a"); f:close(); return s end
 local function write(p, s)
-  os.execute('mkdir -p "' .. p:match("^(.*)/") .. '"')
+  local dir = p:match("^(.*)/")
+  if WIN then os.execute('mkdir "' .. dir:gsub("/", "\\") .. '" 2>nul') else os.execute('mkdir -p "' .. dir .. '"') end
   local f = assert(io.open(p, "wb")); f:write(s); f:close()
 end
-local function files(dir)
-  local t, p = {}, io.popen('cd "' .. dir .. '" && find . -type f')
-  for l in p:lines() do t[#t + 1] = l:sub(3) end
+local function files(dir) -- relative paths of every file under dir (absolute)
+  local t, p = {}, io.popen(WIN and ('dir /s /b /a-d "' .. dir:gsub("/", "\\") .. '"') or ('cd "' .. dir .. '" && find . -type f'))
+  for l in p:lines() do t[#t + 1] = WIN and (l:sub(#dir + 2):gsub("\\", "/")) or l:sub(3) end
   p:close()
   return t
 end
@@ -41,7 +45,7 @@ end
 local tocref = read(SK .. "/references/toc-format.md")
 local iface = tocref:match("^Interface: (%d+)") or tocref:match("\nInterface: (%d+)")
 if not iface then die("Interface not found in references/toc-format.md") end
-local gitname = io.popen("git config user.name 2>/dev/null"):read("*l")
+local gitname = io.popen("git config user.name 2>" .. NUL):read("*l")
 local author = opt.author or (gitname ~= "" and gitname) or "Unknown"
 
 local tokens = {
@@ -96,8 +100,9 @@ write(root .. "/tests/run.sh", [[#!/usr/bin/env bash
 # Run this addon's offline tests (LuaJIT + bundled wowmock).
 set -u
 D="$(cd "$(dirname "$0")/.." && pwd)"
+command -v cygpath >/dev/null && D="$(cygpath -m "$D")" # Git Bash: luajit.exe needs a Windows path in LUA_PATH
 set -- "$D"/tests/*_spec.lua
 LUA_PATH="$D/tests/?.lua;$D/tests/?/init.lua;;" exec luajit "$D/tests/wowmock/runner.lua" "$D" "$@"
 ]])
-os.execute('chmod +x "' .. root .. '/tests/run.sh"')
+if not WIN then os.execute('chmod +x "' .. root .. '/tests/run.sh"') end
 print("created " .. root)

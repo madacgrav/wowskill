@@ -6,10 +6,13 @@ SK="$(cd "$(dirname "$0")/.." && pwd)"
 T="${1:?usage: lint.sh <addon-dir|file.lua>}"
 CFG="$(mktemp)"
 trap 'rm -f "$CFG"' EXIT
+# native luacheck.exe (Git Bash on Windows) only understands backslash paths
+native() { if command -v cygpath >/dev/null; then cygpath -w "${1%/}"; else printf '%s\n' "$1"; fi; }
 cat "$SK/templates/luacheck/forever-std.lua" "$SK/templates/luacheck/base.luacheckrc" > "$CFG"
 # config globs resolve relative to the config file, so re-anchor the path-based rules at the target
 if [ -d "$T" ]; then
-  A="$(cd "$T" && pwd)"
+  A="$(native "$(cd "$T" && pwd)")"
+  A="${A//\\/\\\\}" # backslashes doubled for the Lua strings below
   cat >> "$CFG" <<EOF
 exclude_files = { "$A/**/Libs/**", "$A/Libs/**", "$A/**/tests/wowmock/**", "$A/tests/wowmock/**", "$A/.release/**" }
 files["$A/tests/**"] = { std = "+busted", read_globals = { "ADDON_DIR" } }
@@ -19,7 +22,7 @@ EOF
 fi
 
 rc=0
-luacheck --config "$CFG" --codes "$T" || rc=1
+luacheck --config "$(native "$CFG")" --codes "$(native "$T")" || rc=1
 
 # never-emit: explicit message naming the replacement (luacheck already reports W113)
 NAMES="$(awk '/never-emit:start/{f=1;next}/never-emit:end/{f=0}f' "$SK/references/forever-api-notes.md" \

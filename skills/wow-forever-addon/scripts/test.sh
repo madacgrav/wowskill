@@ -10,4 +10,5 @@ MOCK="$D/tests/wowmock"
 set -- "$D"/tests/*_spec.lua
 [ -e "$1" ] || { echo "no tests in $D/tests"; exit 1; }
 BASE="$(dirname "$MOCK")"
+command -v cygpath >/dev/null && BASE="$(cygpath -m "$BASE")" # Git Bash: luajit.exe needs a Windows path in LUA_PATH
 LUA_PATH="$BASE/?.lua;$BASE/?/init.lua;;" luajit "$MOCK/runner.lua" "$D" "$@"
