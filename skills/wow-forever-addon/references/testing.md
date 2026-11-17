@@ -50,7 +50,7 @@ An unimplemented frame method raises `wowmock: unimplemented Frame:X (add it to 
 
 - **Taint and secure frames:** protected calls, combat lockdown and `ADDON_ACTION_BLOCKED`.
 - **Rendering and layout:** anchors resolve to nothing, and textures and fonts are no-ops.
-- **Secret values / Midnight restrictions.**
+- **Secret values / Midnight restrictions:** the mock returns plain numbers in combat; the real client returns opaque secrets (verified 2026-11-17). Logic that reads unit health or auras in combat passes offline and can still break in-game.
 - **Real library behaviour:** LibStub only exposes the stubs registered in `wowmock/ace.lua`.
 - **Real data:** items, spells and units only return what you put in `opts`.
 

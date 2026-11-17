@@ -4,7 +4,7 @@ local M = {}
 
 local NOOP = { "ClearAllPoints", "SetAllPoints", "SetSize", "SetWidth", "SetHeight", "SetAlpha", "SetScale",
   "SetFrameStrata", "SetFrameLevel", "EnableMouse", "SetMovable", "RegisterForDrag", "SetClampedToScreen",
-  "SetBackdrop", "SetBackdropColor", "SetBackdropBorderColor", "SetTexture", "SetColorTexture", "SetVertexColor",
+  "SetBackdropColor", "SetBackdropBorderColor", "SetTexture", "SetColorTexture", "SetVertexColor",
   "SetJustifyH", "SetJustifyV", "SetFontObject", "SetTextColor", "StartMoving", "StopMovingOrSizing", "SetOwner" }
 
 function M.install(env, api)
@@ -35,6 +35,8 @@ function M.install(env, api)
   function Frame:Show() self._shown = true end
   function Frame:Hide() self._shown = false end
   function Frame:IsShown() return self._shown end
+  function Frame:SetBackdrop(t) self._backdrop = t end
+  function Frame:GetBackdrop() return self._backdrop end
   function Frame:IsVisible() return self._shown end
   function Frame:SetShown(v) self._shown = not not v end
   function Frame:SetScript(name, fn) self._scripts[name] = fn end

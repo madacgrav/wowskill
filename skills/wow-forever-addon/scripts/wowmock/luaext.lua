@@ -58,7 +58,7 @@ function M.install(env, api)
     return fn(...)
   end
   api.InCombatLockdown = function() return env.opts.in_combat == true end
-  api.GetBuildInfo = function() return "1.60.1", "70532", "Oct 22 2026", 16001 end
+  api.GetBuildInfo = function() return "1.60.1", "70959", "Nov 13 2026", 16001 end
   api.GetLocale = function() return "enUS" end
   api.debugstack = function() return debug.traceback() end
   api.geterrorhandler = function() return error end

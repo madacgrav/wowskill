@@ -10,7 +10,7 @@ local f = CreateFrame("Frame", "MyAddonFrame", UIParent, "BackdropTemplate")
 
 - **Types:** `Frame`, `Button`, `CheckButton`, `EditBox`, `ScrollFrame`, `Slider`, `StatusBar`, `Cooldown`, `GameTooltip`, `Model`.
 - **Name:** a global name makes the frame reachable as `_G[name]` and shows it in `/fstack`. Use `nil` for internal frames.
-- **Templates:** `BackdropTemplate` (required before `SetBackdrop`), `UIPanelButtonTemplate`, `UICheckButtonTemplate`, `SecureActionButtonTemplate` (see `taint-and-secure.md`).
+- **Templates:** `BackdropTemplate` (required before `SetBackdrop`; it only adds the methods, so a frame with no `SetBackdrop` call and no texture is invisible, found in-game 2026-11-17), `UIPanelButtonTemplate`, `UICheckButtonTemplate`, `SecureActionButtonTemplate` (see `taint-and-secure.md`).
 - Create each frame **once**. Frames are never freed.
 
 ## Layout

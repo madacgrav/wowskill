@@ -1,6 +1,6 @@
 ---
 name: wow-forever-addon
-description: Build, debug, review, test and release World of Warcraft addons for WoW Forever (Classic+, codename Camelot, TOC Interface 16xxx). Use whenever the user mentions a WoW addon, World of Warcraft addon, Classic+ or WoW Forever addon, a .toc file, WoW Lua, CreateFrame, SavedVariables, WoW slash commands, BugSack or BugGrabber errors, addon taint, Ace3, CurseForge or Wago addon releases, or the BigWigs packager, or when a .toc file or WoW addon folder is in context, even if Forever is not named. Provides the Forever API surface generated from Blizzard docs, vanilla and Ace3 scaffolds, a luacheck config, an offline mock WoW API test harness, CurseForge gap analysis, a tag-to-CurseForge/Wago release pipeline, and routes non-trivial addon work through the qrspi-plan-toolkit planning flow.
+description: Build, debug, review, test and release World of Warcraft addons for WoW Forever (Classic+, codename Camelot, TOC Interface 16xxx). Use for any WoW addon work or question even when the game is not named: WoW addon Lua, a .toc file, CreateFrame, SavedVariables (including SavedVariables nil on login or ADDON_LOADED and PLAYER_LOGIN order), slash commands, OnUpdate lag or addon performance, BugSack or BugGrabber errors and Lua error traces from an addon, addon taint, Ace3 options or profiles, an Interface number or out-of-date TOC, porting an addon between Classic Era, Retail and Forever, asking whether a CurseForge addon already exists for an idea, CurseForge or Wago releases, the BigWigs packager, or a .toc file or addon folder in context. Provides the Forever API index generated from Blizzard docs, vanilla and Ace3 scaffolds, a luacheck config, an offline mock WoW API harness, CurseForge gap analysis, a tag-driven release pipeline, and routes non-trivial addon work through the qrspi-plan-toolkit planning flow.
 license: MIT
 ---
 
@@ -32,11 +32,13 @@ license: MIT
 | Before scaffolding any new addon | `references/curseforge-gap-analysis.md` | The search procedure, report table, and use / fork / build verdict. |
 | Packaging, tagging, uploads, or `.pkgmeta` / `release.yml` | `references/release-pipeline.md` | How the packager detects Forever, the secrets, the local dry run, and the release checklist. |
 
-## Routing
+## Routing (decide this first)
+
+Classify the request before reading templates, running any script or writing Lua.
 
 - **Direct path:** API questions, single-file fixes, one-off debugging, releasing an existing addon. Use the workflows below.
-- **Planning path:** a new addon with 3 or more Lua files, an options UI or Ace3; a meaningful feature (new module, saved-variable schema or frame); or a fork. Hand off to the qrspi-plan-toolkit plugin if its numbered `1-question` … `8-pr` commands are in the available skills list. Otherwise use the direct workflows and mention once that installing that plugin unlocks the structured flow.
-- Before any handoff, read `references/qrspi-handoff.md`. It holds the routing table, the exact commands, and what this skill contributes at each phase.
+- **Planning path:** a new addon with 3 or more Lua files, an options UI or Ace3; a meaningful feature (new module, saved-variable schema or frame); or a fork. If the qrspi-plan-toolkit skills are in the available skills list, read `references/qrspi-handoff.md`, invoke its first (question) command with the request, and stop there; do not scaffold, read templates or write Lua first. If it is not available, say so in one sentence (installing the qrspi-plan-toolkit plugin unlocks the structured flow), then run the gap analysis and continue on the direct path.
+- An instruction to ship the minimal or laziest version does not skip this step. For work of this size the plan is the minimal version; code written before it is the waste.
 
 ## Workflows
 

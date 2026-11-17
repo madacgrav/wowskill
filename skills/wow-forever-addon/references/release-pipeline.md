@@ -47,7 +47,7 @@ The packager skips any upload whose token is unset, so the workflow is safe to c
 
 ## Local dry run (no upload)
 
-The packager needs bash ≥ 4.3 (macOS ships 3.2), plus `jq`, and `svn` for Ace3 externals:
+The packager needs bash ≥ 4.3 (macOS ships 3.2), plus `jq`, `zip`, and `svn` for Ace3 externals. Without `zip` it still builds `.release/<Name>/` but silently produces no archive (seen on WSL Ubuntu 20.04, 2026-11-17). On Windows run it from WSL, not Git Bash: `apt-get install subversion zip`.
 
 ```bash
 brew install bash jq subversion

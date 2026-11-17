@@ -72,6 +72,10 @@ function ns.CreateWindow()
   if ns.window then return ns.window end
   local w = CreateFrame("Frame", addonName .. "Window", UIParent, "BackdropTemplate")
   w:SetSize(200, 80)
+  -- BackdropTemplate only adds the methods; without SetBackdrop the frame is invisible.
+  w:SetBackdrop({ bgFile = "Interface/Tooltips/UI-Tooltip-Background", edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+    tile = true, tileSize = 16, edgeSize = 16, insets = { left = 4, right = 4, top = 4, bottom = 4 } })
+  w:SetBackdropColor(0, 0, 0, 0.8)
   local p = ns.char.point
   w:SetPoint(p[1], p[2], p[3], p[4], p[5])
   w:SetMovable(true)
@@ -125,6 +129,7 @@ SlashCmdList.__KEY__ = function(msg)
   elseif cmd == "show" then
     ns.char.shown = not ns.char.shown
     ns.CreateWindow():SetShown(ns.char.shown)
+    ns.Print("window", ns.char.shown and "shown" or "hidden")
 --@end-pattern@
   else
     ns.Print(help)

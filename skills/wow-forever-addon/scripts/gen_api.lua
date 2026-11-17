@@ -10,7 +10,12 @@ local EXTRA_GLOBALS = { "CreateFrame", "UIParent", "SlashCmdList", "strsplit", "
   "gsub", "format", "tinsert", "tremove", "wipe", "tContains", "sort", "getn", "bit", "securecall",
   "issecurevariable", "hooksecurefunc", "InCombatLockdown", "GetTime", "GetBuildInfo", "debugstack",
   "debugprofilestop", "geterrorhandler", "seterrorhandler", "date", "time", "floor", "ceil", "abs", "max",
-  "min", "mod", "random", "sqrt", "fastrandom", "GetLocale" }
+  "min", "mod", "random", "sqrt", "fastrandom", "GetLocale",
+  -- group, combat log and misc C globals that FrameXML uses but the docs omit (added 2026-11-17 after an eval
+  -- run could not find them; verified in-game with /dump type(Name). CombatLogGetCurrentEventInfo printed nil, so it is on the never-emit list instead)
+  "IsInRaid", "IsInGroup", "GetNumGroupMembers", "GetNumSubgroupMembers", "GetRaidRosterInfo",
+  "GetInventoryItemLink", "GetInventoryItemID", "PlaySoundFile",
+  "GetActionInfo", "GetShapeshiftForm", "CastSpellByName", "ReloadUI", "CreateFont" }
 
 local function lines(cmd)
   local t, p = {}, assert(io.popen(cmd))
@@ -138,6 +143,9 @@ for _, n in ipairs(sorted(ns)) do
 end
 md[#md + 1] = "\n## Global functions (documented)\n" .. table.concat(sorted(docGlobals), ", ") .. "\n"
 md[#md + 1] = ("\nFrameXML/C globals allowed by lint: %d (see templates/luacheck/forever-std.lua)\n"):format(#sorted(fxGlobals))
+local extras = {}
+for _, n in ipairs(EXTRA_GLOBALS) do extras[n] = true end
+md[#md + 1] = "\n## C globals not in the docs (hand-maintained in gen_api.lua, allowed by lint)\n" .. table.concat(sorted(extras), ", ") .. "\n"
 md[#md + 1] = "\n## Events\n"
 for _, e in ipairs(sorted(events)) do md[#md + 1] = ("- `%s` (%s)\n"):format(e, events[e]) end
 fh = assert(io.open(SK .. "/references/forever-api-index.md", "w"))

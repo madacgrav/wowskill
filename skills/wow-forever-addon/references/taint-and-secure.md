@@ -7,7 +7,7 @@ Read this when an addon touches action buttons, unit frames, Blizzard UI frames,
 - Blizzard code runs **secure**, and addon code is **tainted**. Taint spreads to any value or variable an addon writes, and to any code path that reads tainted values.
 - **Protected functions** (casting, targeting, moving or showing secure frames, changing action bars, and so on) may only run from a secure execution path. Some only refuse in combat; others always refuse.
 - When tainted code calls a protected function, the client blocks it and fires `ADDON_ACTION_BLOCKED` (in combat) or `ADDON_ACTION_FORBIDDEN` (always forbidden). Both events are in the Forever index.
-- **Forever caveat:** Midnight's "secret value" restrictions reportedly apply in Forever, limiting what combat and unit data addons can read. **[unverified in Forever]** See `forever-api-notes.md`.
+- **Forever caveat:** Midnight's "secret value" restrictions **apply in Forever** (verified in-game 2026-11-17): in combat, unit health, power and aura reads return opaque secrets, not numbers. Don't compare or compute with them; hand them to Blizzard widgets unchanged. See `forever-api-notes.md`.
 
 ## Rules
 

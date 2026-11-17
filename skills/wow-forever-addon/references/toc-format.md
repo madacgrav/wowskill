@@ -1,5 +1,5 @@
 Interface: 16001
-(as of 2026-11-01, Forever beta/test; confirm after launch with /dump select(4, GetBuildInfo()) and update this line only)
+(verified live 2026-11-17 via /dump select(4, GetBuildInfo()); update this line only after a patch changes it)
 
 # TOC format for WoW Forever
 

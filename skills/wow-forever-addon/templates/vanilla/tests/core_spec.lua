@@ -30,6 +30,7 @@ describe("__NAME__", function()
 
   it("window toggles", function()
     assert.equals(true, ns.window:IsShown())
+    assert.equals("table", type(ns.window:GetBackdrop())) -- visible, not a bare transparent frame
     env:slash("/__SLASH__ show")
     assert.equals(false, ns.window:IsShown())
   end)
