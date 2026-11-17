@@ -75,6 +75,8 @@ Add Forever-specific findings to `references/forever-api-notes.md` with a source
 scripts/check.sh
 ```
 
+Windows: run it from Git Bash with native `luajit.exe` and `luacheck.exe` on `PATH` (no WSL needed). `python3` may be the Store stub; `check.sh` falls back to `python`.
+
 ## License
 
 MIT, see `LICENSE`.
